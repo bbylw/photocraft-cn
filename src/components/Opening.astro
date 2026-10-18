@@ -1,0 +1,54 @@
+---
+import { getImage } from 'astro:assets';
+import Index from './Index';
+import { entries, site } from '../data/site';
+
+const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/shots/*.jpg', { eager: true });
+
+const items = await Promise.all(
+  entries.map(async (entry) => {
+    if (entry.specimen.kind === 'image') {
+      const source = shots[`../assets/shots/${entry.specimen.file}`]?.default;
+      const optimized = source
+        ? await getImage({ src: source, width: 1040, format: 'webp', quality: 74 })
+        : null;
+      const thumb = source
+        ? await getImage({ src: source, width: 320, format: 'webp', quality: 62 })
+        : null;
+      return {
+        name: entry.name,
+        desc: entry.desc,
+        href: entry.href,
+        kind: 'image' as const,
+        src: optimized?.src,
+        thumb: thumb?.src,
+        note: entry.note,
+        label: entry.label,
+      };
+    }
+    return {
+      name: entry.name,
+      desc: entry.desc,
+      href: entry.href,
+      kind: 'fragment' as const,
+      fragment: entry.specimen.id,
+      note: entry.note,
+      label: entry.label,
+    };
+  }),
+);
+---
+
+<header class="wrap topline" id="top">
+  <h1 class="topline__name">{site.name}</h1>
+  <p class="topline__note">
+    净室重写的开源图像编辑器，纯 Rust。九个入口，从调整图层到 MCP。
+  </p>
+  <div class="topline__action">
+    <a class="button" href={site.download}>下载 PhotoCraft</a>
+  </div>
+</header>
+
+<div class="wrap" id="index" data-reveal="1">
+  <Index client:load items={items} />
+</div>

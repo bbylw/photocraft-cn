@@ -1,0 +1,27 @@
+---
+import { apps, site } from '../data/site';
+---
+
+<section id="apps" class="section wrap">
+  <div class="apps" data-reveal="1">
+    <div class="apps__intro">
+      <p>
+        PhotoCraft 是 Crafting 应用之一：来自 <a class="link" href={site.artcraft}>ArtCraft</a>
+        团队的免费开源创意工具，每一件都用 Rust 从零写成，独立运行，也都能被 Agent 完整驱动。
+      </p>
+      <p>
+        七件应用共享同一套约定：净室编写、原生运行、在浏览器里可用，命令行与 MCP 接口一致。
+      </p>
+    </div>
+    <div class="apps__names">
+      {
+        apps.map((app) => (
+          <a href={app.href} aria-current={app.current ? 'true' : undefined}>
+            <span class="apps__app">{app.name}</span>
+            <i>{app.use}</i>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+---
+import PlatformMark from './PlatformMark.astro';
+import { platforms, site } from '../data/site';
+---
+
+<section id="platforms" class="section wrap">
+  <div class="sec-head" data-reveal="1">
+    <h2>平台</h2>
+    <p>
+      同一个原生应用，五个系统，外加浏览器里的 WebAssembly。点选你的平台，前往 GitHub
+      最新发布下载。
+    </p>
+  </div>
+
+  <ul class="platforms" data-reveal="2">
+    {
+      platforms.map((p) => (
+        <li>
+          <a
+            class="platform"
+            href={site.releases}
+            aria-label={`下载 ${p.name} 版，前往 GitHub 最新发布`}
+          >
+            <span class="platform__mark" aria-hidden="true">
+              <PlatformMark name={p.name} />
+            </span>
+            <span class="platform__body">
+              <h3 class="platform__name">{p.name}</h3>
+              <span class="platform__formats">{p.formats}</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="platforms__note">
+    所有构建、校验和与更新日志都在 <a class="link" href={site.releases}>GitHub 最新发布</a
+    >里。Linux 的 Flatpak 需要来自 Flathub 的 freedesktop 运行时，flatpak 会一并提示安装。刚接触
+    PhotoCraft？从 <a class="link" href={site.download}>getartcraft.com 的应用页面</a>下载最简单。
+  </p>
+</section>

@@ -1,0 +1,14 @@
+---
+import Faq from './Faq';
+import { faq } from '../data/site';
+---
+
+<section id="faq" class="section wrap" data-reveal="1">
+  <div class="sec-head">
+    <h2>常见问题</h2>
+    <p>
+      关于 Photoshop 的替代程度、PSD 往返、文件格式、许可证，以及智能体能驱动它做什么。
+    </p>
+  </div>
+  <Faq client:visible items={faq} />
+</section>

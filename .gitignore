@@ -1,0 +1,17 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# local screenshots and dev scratch
+.shots/
+.frontend-studio/
+.playwright-mcp/
+.workbuddy/
+.wbapp_*.genie
+
+# editor and OS noise
+.DS_Store
+.vscode/

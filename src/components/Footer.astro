@@ -1,0 +1,39 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <a class="footer__brand" href="#top">
+        <span class="footer__chip" aria-hidden="true"></span>
+        PhotoCraft
+      </a>
+      <nav aria-label="页脚">
+        <a href="#index">索引</a>
+        <a href={site.github}>GitHub</a>
+        <a href={site.docs}>文档</a>
+        <a href={site.discord}>Discord</a>
+      </nav>
+    </div>
+    <dl class="footer__notes">
+      <div>
+        <dt>图像来源</dt>
+        <dd>
+          截图中的艺术品均处于公共领域，来自 Wikimedia Commons、NASA 与美国国家档案馆；界面截图为真实应用通过控制通道离屏渲染。
+        </dd>
+      </div>
+      <div>
+        <dt>商标与声明</dt>
+        <dd>
+          Adobe、Photoshop 是 Adobe Inc. 在美国和／或其他国家／地区的商标或注册商标。PhotoCraft
+          是一个独立的开源项目，与 Adobe Inc. 无隶属、赞助或背书关系。
+        </dd>
+      </div>
+    </dl>
+    <div class="footer__base">
+      <span>PhotoCraft · MIT / Apache-2.0</span>
+      <span>© 2026 ArtCraft 团队与 PhotoCraft 贡献者</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import { figures } from '../data/site';
+
+const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/shots/*.jpg', { eager: true });
+const demo = shots['../assets/shots/photocraft-demo.jpg']?.default;
+---
+
+<section id="psd" class="section wrap">
+  <div class="sec-head" data-reveal="1">
+    <h2>PSD 文件</h2>
+    <p>一个独立的 Rust crate，依据 Adobe 公开规范编写，用真实文件语料测试。数字不修辞。</p>
+  </div>
+
+  <dl class="figures" data-reveal="2">
+    {
+      figures.map(([value, text]) => (
+        <div class="figures__cell">
+          <dt class="figures__v">{value}</dt>
+          <dd class="figures__t">{text}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  {
+    demo && (
+      <figure class="psd__shot" data-reveal="2">
+        <Image
+          src={demo}
+          alt="PhotoCraft 主界面：说明卡片、标题与署名文字图层、曲线与自然饱和度调整图层"
+          width={1600}
+          format="webp"
+          quality={72}
+          sizes="(min-width: 90rem) 82rem, 100vw"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>一个 PSD 打开之后的样子：卡片、四个文字图层、两个调整图层。</figcaption>
+      </figure>
+    )
+  }
+
+  <p class="psd__foot" data-reveal="3">
+    <span>取语料用 <code>cargo xtask corpus --all</code>，跑测试用 <code>cargo xtask test-corpus</code>。</span>
+    <span>尚未建模的数据块会被保留，而不是丢弃。</span>
+  </p>
+</section>

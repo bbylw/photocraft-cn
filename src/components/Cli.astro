@@ -1,0 +1,104 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="cli" class="section wrap">
+  <div class="sec-head" data-reveal="1">
+    <h2>命令行与 MCP</h2>
+    <p>
+      每个菜单项、工具与对话框都运行同一个注册表里的命令。UI、CLI、JSON 控制通道与 MCP
+      服务器调用的都是它们。
+    </p>
+  </div>
+
+  <div class="exchanges">
+    <div class="exchange" data-reveal="1">
+      <h3>先打开一张 PSD。</h3>
+      <div class="exchange__pair">
+        <div class="code">
+          <div class="code__bar">
+            <span class="code__lang">sh</span>
+            <button class="copy" type="button">复制</button>
+          </div>
+          <pre><code><span class="c"># 桌面应用，原生窗口</span>
+cargo run --release -p photocraft -- image.psd</code></pre>
+        </div>
+        <div class="resp" data-ui="status">
+          <div class="resp__head"><span>文档状态</span><span class="resp__ok">已打开</span></div>
+          <div class="resp__row"><span>image.psd</span><span>3859 × 2594</span></div>
+          <div class="resp__row"><span>RGB 色彩 · 8 位/通道</span><span>6 个图层</span></div>
+          <div class="resp__row"><span>曲线 1 · 自然饱和度 1 · 文字 ×2</span><span>可编辑</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange" data-reveal="2">
+      <h3>再让脚本跑一整个文件夹。</h3>
+      <div class="exchange__pair">
+        <div class="code">
+          <div class="code__bar">
+            <span class="code__lang">sh</span>
+            <button class="copy" type="button">复制</button>
+          </div>
+          <pre><code><span class="c"># 无界面模式：把一个动作列表应用到一整个图片文件夹</span>
+photocraft-cli batch --actions grade.json --in ./raw --out ./graded</code></pre>
+        </div>
+        <div class="resp" data-ui="batch">
+          <div class="resp__head"><span>batch · 4 张</span><span class="resp__ok">全部完成</span></div>
+          <div class="resp__row"><span>raw/001.jpg → graded/001.png</span><span>完成</span></div>
+          <div class="resp__row"><span>raw/002.jpg → graded/002.png</span><span>完成</span></div>
+          <div class="resp__row"><span>raw/003.jpg → graded/003.png</span><span>完成</span></div>
+          <div class="resp__row"><span>raw/004.jpg → graded/004.png</span><span>完成</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange" data-reveal="3">
+      <h3>最后让 Agent 通过 MCP 驱动它。</h3>
+      <div class="exchange__pair">
+        <div class="code">
+          <div class="code__bar">
+            <span class="code__lang">sh</span>
+            <button class="copy" type="button">复制</button>
+          </div>
+          <pre><code><span class="c"># 无界面，或桥接到正在运行的应用</span>
+photocraft-cli mcp
+
+<span class="c"># 每个子命令都会自我说明</span>
+photocraft-cli batch --help</code></pre>
+        </div>
+        <div class="resp" data-ui="mcp">
+          <div class="resp__head"><span>MCP · 工具调用</span><span class="resp__ok">ok</span></div>
+          <div class="resp__row resp__row--wide">
+            <span>layer.newAdjustmentLayer.curves</span>
+            <span>points [[0,0],[64,48],[192,212],[255,255]]</span>
+          </div>
+          <div class="resp__row"><span>filter.sharpen.smartSharpen</span><span>amount 80</span></div>
+          <div class="resp__row"><span>返回 · 曲线 1 已建立，索引 3</span><span>已插入</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="plate__caption" data-reveal="3">
+    <span>桌面应用另有仅限回环的认证控制通道，可以检视界面状态、截取离屏截图。</span>
+    <span><a class="link" href={site.docs}>读文档</a></span>
+  </p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.code').forEach((box) => {
+    const btn = box.querySelector<HTMLButtonElement>('.copy');
+    const code = box.querySelector('code');
+    if (!btn || !code) return;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.textContent ?? '');
+        btn.textContent = '已复制';
+      } catch {
+        btn.textContent = '按 Ctrl+C';
+      }
+      setTimeout(() => (btn.textContent = '复制'), 1600);
+    });
+  });
+</script>

@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import { parts } from '../data/site';
+
+const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/shots/*.jpg', { eager: true });
+const pick = (file: string) => shots[`../assets/shots/${file}`]?.default;
+
+const [lead, ...rest] = parts;
+---
+
+<section id="parts" class="section wrap">
+  <div class="sec-head" data-reveal="1">
+    <h2>部件的近看</h2>
+    <p>
+      五种在 Photoshop 里天天用到的东西。每一张都是真实应用在工作，通过控制通道离屏渲染。
+    </p>
+  </div>
+
+  <article class="part-lead" id={lead.id} data-reveal="2">
+    <figure class="part__figure">
+      <div class="part__frame">
+        <Image
+          src={pick(lead.file)!}
+          alt={lead.alt}
+          width={1200}
+          format="webp"
+          quality={78}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="part__figcap">{lead.art}</figcaption>
+    </figure>
+    <div class="part-lead__text">
+      <h3>{lead.name}</h3>
+      <p class="part__lead">{lead.lead}</p>
+      <p class="part__body">{lead.body}</p>
+      <ul class="part__specs">
+        {lead.specs.map(([k, v]) => (
+          <li>
+            <span>{k}</span>
+            <b>{v}</b>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </article>
+
+  <div class="part-grid">
+    {
+      rest.map((part, i) => (
+        <article class="part" id={part.id} data-reveal={i === 0 ? '2' : undefined}>
+          <figure class="part__figure">
+            <div class="part__frame">
+              <Image
+                src={pick(part.file)!}
+                alt={part.alt}
+                width={760}
+                format="webp"
+                quality={74}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <figcaption class="part__figcap">{part.art}</figcaption>
+          </figure>
+          <div class="part__text">
+            <h3>{part.name}</h3>
+            <p class="part__lead">{part.lead}</p>
+            <p class="part__body">{part.body}</p>
+            <ul class="part__specs">
+              {part.specs.map(([k, v]) => (
+                <li>
+                  <span>{k}</span>
+                  <b>{v}</b>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+import Bench from './Bench';
+import { site } from '../data/site';
+import wave from '../assets/great-wave.jpg';
+---
+
+<section id="adjustments" class="section wrap">
+  <div class="sec-head" data-reveal="1">
+    <h2>调整图层</h2>
+    <p>
+      十六种调整图层叠在画布上，原始像素从不被改动。下面这块面板是真的：点任意图层前的眼睛，像素会重新算一遍。
+    </p>
+  </div>
+
+  <div data-reveal="2">
+    <Bench client:load waveSrc={wave.src} />
+  </div>
+
+  <p class="plate__caption" data-reveal="3">
+    <span>图为葛饰北斋《神奈川冲浪里》，约 1831 年，公共领域。</span>
+    <span>截图与画布均来自真实应用 · <a class="link" href={site.github}>查看源码</a></span>
+  </p>
+</section>
